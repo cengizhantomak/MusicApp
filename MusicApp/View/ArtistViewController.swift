@@ -48,4 +48,14 @@ class ArtistViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: "toArtistDetailVC", sender: indexPath.row)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let index = sender as? Int
+        let artistDetailVC = segue.destination as! ArtistDetailViewController
+        artistDetailVC.artist = artistViewModel.artist(at: index!)
+    }
 }
