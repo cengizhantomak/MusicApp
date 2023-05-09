@@ -38,6 +38,11 @@ class AlbumDetailViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        trackTableView.reloadData()
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -63,6 +68,20 @@ class AlbumDetailViewController: UIViewController, UITableViewDelegate, UITableV
         cell.trackDuration.text = albumDetailViewModel.secondsToMinutesSeconds(seconds: trackDurationInSeconds)
         
         cell.playIcon.isHidden = true
+        
+        cell.isFavorited = false // Varsayılan olarak favori değil
+        cell.likeImage.image = UIImage(systemName: "heart")?.withTintColor(.systemRed, renderingMode: .alwaysOriginal) // İçi boş kalp simgesi
+        cell.likeImage.isUserInteractionEnabled = true
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(likeImageTapped(_:)))
+        cell.likeImage.addGestureRecognizer(tapGestureRecognizer)
+        cell.likeImage.tag = indexPath.row
+        
+        if isFavoriteTrack(track) {
+            cell.likeImage.image = UIImage(systemName: "heart.fill")?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
+        } else {
+            cell.likeImage.image = UIImage(systemName: "heart")?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
+        }
         
         cell.trackImage.layer.cornerRadius = 10
         cell.trackView.layer.cornerRadius = 10
@@ -100,5 +119,31 @@ class AlbumDetailViewController: UIViewController, UITableViewDelegate, UITableV
                 selectedCell.playIcon.isHidden = false
             }
         }
+    }
+    
+    @objc func likeImageTapped(_ sender: UITapGestureRecognizer) {
+        guard let row = sender.view?.tag else{
+            return
+        }
+        
+        guard let cell = trackTableView.cellForRow(at: IndexPath(row: row, section: 0)) as? TrackTableViewCell else {
+            return
+        }
+        
+        cell.isFavorited.toggle()
+        
+        let track = albumDetailViewModel.track(at: row)
+        
+        if albumDetailViewModel.isFavoriteTrack(track) {
+            albumDetailViewModel.removeTrackFromCoreData(track: track)
+            cell.likeImage.image = UIImage(systemName: "heart")?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
+        } else {
+            albumDetailViewModel.saveTrackToCoreData(track: track, albumImageUrl: album!.cover_medium)
+            cell.likeImage.image = UIImage(systemName: "heart.fill")?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
+        }
+    }
+    
+    func isFavoriteTrack(_ track: AlbumDetailDataModel) -> Bool {
+        return albumDetailViewModel.isFavoriteTrack(track)
     }
 }
