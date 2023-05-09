@@ -31,6 +31,9 @@
 		47D34BF72A0A8D63006B5DAB /* AlbumDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D34BF62A0A8D63006B5DAB /* AlbumDetailViewController.swift */; };
 		47D34BF92A0A8DE9006B5DAB /* AlbumDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D34BF82A0A8DE9006B5DAB /* AlbumDetailModel.swift */; };
 		47D34BFB2A0A8E14006B5DAB /* AlbumDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D34BFA2A0A8E14006B5DAB /* AlbumDetailViewModel.swift */; };
+		47D34BFD2A0A9668006B5DAB /* LikeTracksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D34BFC2A0A9668006B5DAB /* LikeTracksTableViewCell.swift */; };
+		47D34BFF2A0A96AB006B5DAB /* LikesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D34BFE2A0A96AB006B5DAB /* LikesViewController.swift */; };
+		47D34C012A0A977F006B5DAB /* LikeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D34C002A0A977F006B5DAB /* LikeViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +63,9 @@
 		47D34BF62A0A8D63006B5DAB /* AlbumDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailViewController.swift; sourceTree = "<group>"; };
 		47D34BF82A0A8DE9006B5DAB /* AlbumDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailModel.swift; sourceTree = "<group>"; };
 		47D34BFA2A0A8E14006B5DAB /* AlbumDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailViewModel.swift; sourceTree = "<group>"; };
+		47D34BFC2A0A9668006B5DAB /* LikeTracksTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeTracksTableViewCell.swift; sourceTree = "<group>"; };
+		47D34BFE2A0A96AB006B5DAB /* LikesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesViewController.swift; sourceTree = "<group>"; };
+		47D34C002A0A977F006B5DAB /* LikeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +121,7 @@
 				47D34BE42A0A8972006B5DAB /* ArtistViewController.swift */,
 				47D34BEE2A0A8B64006B5DAB /* ArtistDetailViewController.swift */,
 				47D34BF62A0A8D63006B5DAB /* AlbumDetailViewController.swift */,
+				47D34BFE2A0A96AB006B5DAB /* LikesViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -126,6 +133,7 @@
 				47D34BE82A0A89EA006B5DAB /* ArtistViewModel.swift */,
 				47D34BF22A0A8BBC006B5DAB /* ArtistDetailViewModel.swift */,
 				47D34BFA2A0A8E14006B5DAB /* AlbumDetailViewModel.swift */,
+				47D34C002A0A977F006B5DAB /* LikeViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -137,6 +145,7 @@
 				47D34BEA2A0A8A1C006B5DAB /* ArtistCollectionViewCell.swift */,
 				47D34BEC2A0A8B2E006B5DAB /* AlbumTableViewCell.swift */,
 				47D34BF42A0A8D00006B5DAB /* TrackTableViewCell.swift */,
+				47D34BFC2A0A9668006B5DAB /* LikeTracksTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -236,6 +245,7 @@
 				47D34BD82A0A8517006B5DAB /* GenreModel.swift in Sources */,
 				47D34BBD2A0A83D4006B5DAB /* AppDelegate.swift in Sources */,
 				47D34BE92A0A89EA006B5DAB /* ArtistViewModel.swift in Sources */,
+				47D34BFD2A0A9668006B5DAB /* LikeTracksTableViewCell.swift in Sources */,
 				47D34BBF2A0A83D4006B5DAB /* SceneDelegate.swift in Sources */,
 				47D34BE22A0A8640006B5DAB /* GenreViewModel.swift in Sources */,
 				47D34BDB2A0A855B006B5DAB /* GenreCollectionViewCell.swift in Sources */,
@@ -253,6 +263,8 @@
 				47D34BF12A0A8B9D006B5DAB /* ArtistDetailModel.swift in Sources */,
 				47D34BDE2A0A85B9006B5DAB /* APIManager.swift in Sources */,
 				47D34BE52A0A8972006B5DAB /* ArtistViewController.swift in Sources */,
+				47D34BFF2A0A96AB006B5DAB /* LikesViewController.swift in Sources */,
+				47D34C012A0A977F006B5DAB /* LikeViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
