@@ -7,12 +7,17 @@
 
 import UIKit
 import CoreData
+import AVFoundation
 
 class LikesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var likeTrackTableView: UITableView!
     
     private var viewModel = LikeViewModel()
+    
+    var audioPlayer: AVPlayer?
+    var isPlaying: Bool = false
+    var currentPlayingIndexPath: IndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +35,13 @@ class LikesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         likeTrackTableView.reloadData()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        audioPlayer?.pause()
+        audioPlayer = nil
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numberOfRows
     }
@@ -44,7 +56,18 @@ class LikesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
         
         cell.likeNameLabel.text = track.value(forKey: "title") as? String
-        cell.likeDurationLabel.text = track.value(forKey: "duration") as? String
+        
+        let trackDurationInSeconds = track.value(forKey: "duration") as? Int ?? 0
+        let duration = viewModel.secondsToMinutesSeconds(seconds: trackDurationInSeconds)
+        cell.likeDurationLabel.text = duration
+        
+        cell.likePlayIcon.isHidden = true
+        
+        cell.likeImage.image = UIImage(systemName: "heart.fill")?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(likeImageTapped(_:)))
+        cell.likeImage.addGestureRecognizer(tapGestureRecognizer)
+        cell.likeImage.isUserInteractionEnabled = true
+        cell.likeImage.tag = indexPath.row
         
         cell.likesTrackImage.layer.cornerRadius = 10
         cell.likesView.layer.cornerRadius = 10
@@ -52,5 +75,44 @@ class LikesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         cell.likesView.layer.borderColor = UIColor.darkGray.cgColor
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        likeTrackTableView.deselectRow(at: indexPath, animated: true)
+        
+        let selectedTrack = viewModel.track(at: indexPath.row)
+        let selectedCell = likeTrackTableView.cellForRow(at: indexPath) as! LikeTracksTableViewCell
+        
+        if currentPlayingIndexPath == indexPath && isPlaying {
+            audioPlayer?.pause()
+            isPlaying = false
+            selectedCell.likePlayIcon.isHidden = true
+            
+        } else {
+            
+            if let previousPlayingIndexPath = currentPlayingIndexPath, let previousCell = likeTrackTableView.cellForRow(at: previousPlayingIndexPath) as? LikeTracksTableViewCell {
+                previousCell.likePlayIcon.isHidden = true
+            }
+            
+            if let previewURL = URL(string: selectedTrack.value(forKey: "preview") as! String) {
+                let playerItem = AVPlayerItem(url: previewURL)
+                
+                currentPlayingIndexPath = indexPath
+                
+                audioPlayer = AVPlayer(playerItem: playerItem)
+                audioPlayer?.play()
+                isPlaying = true
+                selectedCell.likePlayIcon.isHidden = false
+            }
+        }
+    }
+    
+    @objc func likeImageTapped(_ sender: UITapGestureRecognizer) {
+        guard let row = sender.view?.tag else { return }
+        let track = viewModel.track(at: row)
+        
+        viewModel.deleteTrackFromCoreData(track: track)
+        viewModel.removeTrack(at: row)
+        likeTrackTableView.deleteRows(at: [IndexPath(row: row, section: 0)], with: .automatic)
     }
 }

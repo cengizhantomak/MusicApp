@@ -33,4 +33,28 @@ class LikeViewModel {
             print("Could not fetch tracks. \(error), \(error.userInfo)")
         }
     }
+    
+    func secondsToMinutesSeconds(seconds: Int) -> String {
+        let mins = seconds / 60
+        let secs = seconds % 60
+        return String(format: "%d:%02d", mins, secs)
+    }
+    
+    func deleteTrackFromCoreData(track: NSManagedObject) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+
+        context.delete(track)
+
+        do {
+            try context.save()
+            print("Track removed from Core Data.")
+        } catch let error as NSError {
+            print("Could not delete track. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func removeTrack(at index: Int) {
+        favoriteTracks.remove(at: index)
+    }
 }

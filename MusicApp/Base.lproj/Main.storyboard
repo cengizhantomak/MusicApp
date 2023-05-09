@@ -29,7 +29,7 @@
             </objects>
             <point key="canvasLocation" x="38.931297709923662" y="-27.464788732394368"/>
         </scene>
-        <!--Genre View Controller-->
+        <!--MusicApp-->
         <scene sceneID="DZg-oD-yDa">
             <objects>
                 <viewController id="ZCe-iC-Dvr" customClass="GenreViewController" customModule="MusicApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -95,7 +95,7 @@
                             <constraint firstItem="9hc-Im-w2J" firstAttribute="leading" secondItem="cOa-zd-8M1" secondAttribute="leading" constant="11" id="ynF-9k-AGR"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="6Nt-Kg-OMs"/>
+                    <navigationItem key="navigationItem" title="MusicApp" id="6Nt-Kg-OMs"/>
                     <connections>
                         <outlet property="genreCollectionView" destination="9hc-Im-w2J" id="0Iv-Xg-wEF"/>
                         <segue destination="eTI-YR-hpN" kind="show" identifier="toArtistVC" id="TD3-hU-qIw"/>
@@ -433,18 +433,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Beğenilenler" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oDR-6T-Nck">
-                                <rect key="frame" x="149.33333333333334" y="59" width="94.333333333333343" height="44"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Likes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oDR-6T-Nck">
+                                <rect key="frame" x="175.33333333333334" y="59" width="42.666666666666657" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="aYc-hV-BlA"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ZNl-iC-JhI">
-                                <rect key="frame" x="0.0" y="108" width="393" height="661"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ZNl-iC-JhI">
+                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="likeTrackCell" rowHeight="100" id="Zqi-NY-390" customClass="LikeTracksTableViewCell" customModule="MusicApp" customModuleProvider="target">
@@ -541,8 +540,12 @@
                         <viewLayoutGuide key="safeArea" id="lXb-JA-7eR"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="ZNl-iC-JhI" firstAttribute="bottom" secondItem="lXb-JA-7eR" secondAttribute="bottom" id="8TF-yl-2Lx"/>
+                            <constraint firstItem="ZNl-iC-JhI" firstAttribute="top" secondItem="oDR-6T-Nck" secondAttribute="bottom" id="8cQ-eJ-Scs"/>
                             <constraint firstItem="oDR-6T-Nck" firstAttribute="top" secondItem="lXb-JA-7eR" secondAttribute="top" id="Cbu-vx-HoY"/>
+                            <constraint firstItem="ZNl-iC-JhI" firstAttribute="leading" secondItem="lXb-JA-7eR" secondAttribute="leading" id="Vbq-FE-Doe"/>
                             <constraint firstItem="oDR-6T-Nck" firstAttribute="centerX" secondItem="6BM-dP-UaM" secondAttribute="centerX" id="eQa-Ay-7Nh"/>
+                            <constraint firstItem="ZNl-iC-JhI" firstAttribute="trailing" secondItem="lXb-JA-7eR" secondAttribute="trailing" id="zRa-ht-idy"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="heart" catalog="system" id="Yjs-6u-0QC">
