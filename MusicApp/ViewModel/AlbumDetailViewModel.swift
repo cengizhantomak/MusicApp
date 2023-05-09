@@ -35,4 +35,10 @@ class AlbumDetailViewModel {
             }
         }
     }
+    
+    func secondsToMinutesSeconds(seconds: Int) -> String {
+        let mins = seconds / 60
+        let secs = seconds % 60
+        return String(format: "%d:%02d", mins, secs)
+    }
 }

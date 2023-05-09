@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class AlbumDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -13,6 +14,10 @@ class AlbumDetailViewController: UIViewController, UITableViewDelegate, UITableV
     
     var album: ArtistDetailDataModel?
     var albumDetailViewModel: AlbumDetailViewModel!
+    
+    var audioPlayer: AVPlayer?
+    var isPlaying: Bool = false
+    var currentPlayingIndexPath: IndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +38,13 @@ class AlbumDetailViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        audioPlayer?.pause()
+        audioPlayer = nil
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return albumDetailViewModel.numberOfTracks
     }
@@ -46,7 +58,11 @@ class AlbumDetailViewController: UIViewController, UITableViewDelegate, UITableV
         }
         
         cell.trackNameLabel.text = track.title
-        cell.trackDuration.text = String(track.duration)
+        
+        let trackDurationInSeconds = track.duration
+        cell.trackDuration.text = albumDetailViewModel.secondsToMinutesSeconds(seconds: trackDurationInSeconds)
+        
+        cell.playIcon.isHidden = true
         
         cell.trackImage.layer.cornerRadius = 10
         cell.trackView.layer.cornerRadius = 10
@@ -54,5 +70,35 @@ class AlbumDetailViewController: UIViewController, UITableViewDelegate, UITableV
         cell.trackView.layer.borderColor = UIColor.darkGray.cgColor
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        trackTableView.deselectRow(at: indexPath, animated: true)
+        
+        let selectedTrack = albumDetailViewModel.track(at: indexPath.row)
+        let selectedCell = trackTableView.cellForRow(at: indexPath) as! TrackTableViewCell
+        
+        if currentPlayingIndexPath == indexPath && isPlaying {
+            audioPlayer?.pause()
+            isPlaying = false
+            selectedCell.playIcon.isHidden = true
+            
+        } else {
+            
+            if let previousPlayingIndexPath = currentPlayingIndexPath, let previousCell = trackTableView.cellForRow(at: previousPlayingIndexPath) as? TrackTableViewCell {
+                previousCell.playIcon.isHidden = true
+            }
+            
+            if let previewURL = URL(string: selectedTrack.preview) {
+                let playerItem = AVPlayerItem(url: previewURL)
+                
+                currentPlayingIndexPath = indexPath
+                
+                audioPlayer = AVPlayer(playerItem: playerItem)
+                audioPlayer?.play()
+                isPlaying = true
+                selectedCell.playIcon.isHidden = false
+            }
+        }
     }
 }
