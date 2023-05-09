@@ -51,7 +51,9 @@ class ArtistDetailViewController: UIViewController, UITableViewDelegate, UITable
         }
         
         cell.albumNameLabel.text = album.title
-        cell.albumReleaseDateLabel.text = album.release_date
+        
+        let releaseDate = artistDetailViewModel.convertDate(inputDate: album.release_date)
+        cell.albumReleaseDateLabel.text = releaseDate
         
         cell.albumImage.layer.cornerRadius = 10
         cell.albumView.layer.cornerRadius = 10

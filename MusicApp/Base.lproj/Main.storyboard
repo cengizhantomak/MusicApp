@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qNg-3V-354">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -434,16 +435,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Likes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oDR-6T-Nck">
-                                <rect key="frame" x="175.33333333333334" y="59" width="42.666666666666657" height="44"/>
+                                <rect key="frame" x="175.33333333333334" y="59" width="42.666666666666657" height="35"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="aYc-hV-BlA"/>
+                                    <constraint firstAttribute="height" constant="35" id="aYc-hV-BlA"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ZNl-iC-JhI">
-                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
+                                <rect key="frame" x="0.0" y="155" width="393" height="614"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="likeTrackCell" rowHeight="100" id="Zqi-NY-390" customClass="LikeTracksTableViewCell" customModule="MusicApp" customModuleProvider="target">
@@ -536,15 +537,25 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="5KC-NZ-GQs">
+                                <rect key="frame" x="0.0" y="94" width="393" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="etv-rM-KFl" id="1VK-AJ-plC"/>
+                                </connections>
+                            </searchBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="lXb-JA-7eR"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="5KC-NZ-GQs" firstAttribute="top" secondItem="oDR-6T-Nck" secondAttribute="bottom" id="6NT-yA-D58"/>
                             <constraint firstItem="ZNl-iC-JhI" firstAttribute="bottom" secondItem="lXb-JA-7eR" secondAttribute="bottom" id="8TF-yl-2Lx"/>
-                            <constraint firstItem="ZNl-iC-JhI" firstAttribute="top" secondItem="oDR-6T-Nck" secondAttribute="bottom" id="8cQ-eJ-Scs"/>
                             <constraint firstItem="oDR-6T-Nck" firstAttribute="top" secondItem="lXb-JA-7eR" secondAttribute="top" id="Cbu-vx-HoY"/>
                             <constraint firstItem="ZNl-iC-JhI" firstAttribute="leading" secondItem="lXb-JA-7eR" secondAttribute="leading" id="Vbq-FE-Doe"/>
+                            <constraint firstItem="5KC-NZ-GQs" firstAttribute="trailing" secondItem="lXb-JA-7eR" secondAttribute="trailing" id="XXZ-qb-iIT"/>
                             <constraint firstItem="oDR-6T-Nck" firstAttribute="centerX" secondItem="6BM-dP-UaM" secondAttribute="centerX" id="eQa-Ay-7Nh"/>
+                            <constraint firstItem="ZNl-iC-JhI" firstAttribute="top" secondItem="5KC-NZ-GQs" secondAttribute="bottom" constant="5" id="fIW-45-OmC"/>
+                            <constraint firstItem="5KC-NZ-GQs" firstAttribute="leading" secondItem="lXb-JA-7eR" secondAttribute="leading" id="n5M-Fl-zsG"/>
                             <constraint firstItem="ZNl-iC-JhI" firstAttribute="trailing" secondItem="lXb-JA-7eR" secondAttribute="trailing" id="zRa-ht-idy"/>
                         </constraints>
                     </view>
@@ -559,6 +570,7 @@
                     </tabBarItem>
                     <connections>
                         <outlet property="likeTrackTableView" destination="ZNl-iC-JhI" id="C2g-Yw-Wse"/>
+                        <outlet property="searchTrack" destination="5KC-NZ-GQs" id="hvB-Jp-RJ8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7AN-8W-mcu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

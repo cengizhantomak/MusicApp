@@ -9,9 +9,10 @@ import UIKit
 import CoreData
 import AVFoundation
 
-class LikesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class LikesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     @IBOutlet weak var likeTrackTableView: UITableView!
+    @IBOutlet weak var searchTrack: UISearchBar!
     
     private var viewModel = LikeViewModel()
     
@@ -21,6 +22,8 @@ class LikesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        searchTrack.delegate = self
         
         likeTrackTableView.delegate = self
         likeTrackTableView.dataSource = self
@@ -107,6 +110,11 @@ class LikesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
     
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        viewModel.filterTracks(with: searchText)
+        likeTrackTableView.reloadData()
+    }
+    
     @objc func likeImageTapped(_ sender: UITapGestureRecognizer) {
         guard let row = sender.view?.tag else { return }
         let track = viewModel.track(at: row)
@@ -114,5 +122,6 @@ class LikesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         viewModel.deleteTrackFromCoreData(track: track)
         viewModel.removeTrack(at: row)
         likeTrackTableView.deleteRows(at: [IndexPath(row: row, section: 0)], with: .automatic)
+        likeTrackTableView.reloadData()
     }
 }

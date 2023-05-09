@@ -57,4 +57,21 @@ class LikeViewModel {
     func removeTrack(at index: Int) {
         favoriteTracks.remove(at: index)
     }
+    
+    func filterTracks(with searchText: String) {
+        if searchText.isEmpty {
+            fetchFavoriteTracks()
+        } else {
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appDelegate.persistentContainer.viewContext
+            let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Track")
+            fetchRequest.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchText)
+            
+            do {
+                favoriteTracks = try context.fetch(fetchRequest)
+            } catch let error as NSError {
+                print("Could not fetch tracks. \(error), \(error.userInfo)")
+            }
+        }
+    }
 }

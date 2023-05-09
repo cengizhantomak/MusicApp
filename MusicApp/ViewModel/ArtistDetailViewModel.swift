@@ -35,4 +35,16 @@ class ArtistDetailViewModel {
             }
         }
     }
+    
+    func convertDate(inputDate: String) -> String? {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "yyyy-dd-mm"
+        if let date = inputFormatter.date(from: inputDate) {
+            let outputFormatter = DateFormatter()
+            outputFormatter.dateFormat = "dd.MM.yyyy"
+            return outputFormatter.string(from: date)
+        } else {
+            return nil
+        }
+    }
 }
