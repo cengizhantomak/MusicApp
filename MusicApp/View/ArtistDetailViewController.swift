@@ -60,4 +60,14 @@ class ArtistDetailViewController: UIViewController, UITableViewDelegate, UITable
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: "toAlbumDetailVC", sender: indexPath.row)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let index = sender as? Int
+        let albumDetailVC = segue.destination as! AlbumDetailViewController
+        albumDetailVC.album = artistDetailViewModel.album(at: index!)
+    }
 }
