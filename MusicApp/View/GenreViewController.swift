@@ -45,4 +45,15 @@ class GenreViewController: UIViewController, UICollectionViewDataSource, UIColle
         
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        self.performSegue(withIdentifier: "toArtistVC", sender: indexPath.row)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let index = sender as? Int
+        let artistVC = segue.destination as! ArtistViewController
+        artistVC.genre = genreViewModel.genre(at: index!)
+    }
 }
