@@ -19,6 +19,8 @@ class GenreViewController: UIViewController, UICollectionViewDataSource, UIColle
         genreCollectionView.dataSource = self
         genreCollectionView.delegate = self
         
+        genreCollectionView.showsVerticalScrollIndicator = false
+        
         genreViewModel = GenreViewModel()
         genreViewModel.fetchGenres {
             DispatchQueue.main.async {

@@ -20,6 +20,8 @@ class ArtistViewController: UIViewController, UICollectionViewDelegate, UICollec
         artistCollectionView.delegate = self
         artistCollectionView.dataSource = self
         
+        artistCollectionView.showsVerticalScrollIndicator = false
+        
         artistViewModel = ArtistViewModel(genreId: genre!.id)
         artistViewModel.fetchArtists {
             DispatchQueue.main.async {
