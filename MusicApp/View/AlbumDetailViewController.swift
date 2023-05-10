@@ -45,11 +45,6 @@ class AlbumDetailViewController: UIViewController {
         albumDetailViewModel.stopPlaying()
     }
     
-    // MARK: - Favorite Track Status
-    func isFavoriteTrack(_ track: AlbumDetailDataModel) -> Bool {
-        return albumDetailViewModel.isFavoriteTrack(track)
-    }
-    
     // MARK: - Actions Selector
     @objc func likeImageTapped(_ sender: UITapGestureRecognizer) {
         guard let row = sender.view?.tag else{ return }
@@ -101,7 +96,7 @@ extension AlbumDetailViewController: UITableViewDelegate, UITableViewDataSource 
         cell.likeImage.addGestureRecognizer(tapGestureRecognizer)
         cell.likeImage.tag = indexPath.row
         
-        if isFavoriteTrack(track) {
+        if albumDetailViewModel.isFavoriteTrack(track) {
             cell.likeImage.image = UIImage(systemName: "heart.fill")?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
         } else {
             cell.likeImage.image = UIImage(systemName: "heart")?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
