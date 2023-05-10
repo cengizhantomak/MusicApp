@@ -10,29 +10,31 @@ import UIKit
 
 class ImageLoader {
     static let shared = ImageLoader()
+    private var imageCache: [String: UIImage] = [:]
+    
     private init() {}
     
     func loadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
-        guard let url = URL(string: urlString) else {
-            completion(nil)
-            return
+        if let cachedImage = imageCache[urlString] {
+            completion(cachedImage)
+        } else {
+            URLSession.shared.dataTask(with: URL(string: urlString)!) { data, response, error in
+                if let error = error {
+                    print("Error: \(error)")
+                    completion(nil)
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    if let image = UIImage(data: data!) {
+                        self.imageCache[urlString] = image
+                        completion(image)
+                    } else {
+                        completion(nil)
+                    }
+                }
+                
+            }.resume()
         }
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if let error = error {
-                print("Failed to fetch image:", error)
-                completion(nil)
-                return
-            }
-            
-            guard let data = data else {
-                completion(nil)
-                return
-            }
-            
-            DispatchQueue.main.async {
-                completion(UIImage(data: data))
-            }
-        }.resume()
     }
 }

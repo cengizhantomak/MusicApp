@@ -18,6 +18,7 @@ class GenreViewModel {
         return genreList[index]
     }
     
+    // MARK: - Networking
     func fetchGenres(completion: @escaping () -> Void) {
         let urlString = "https://api.deezer.com/genre"
         APIManager.shared.fetchData(urlString: urlString) { (result: Result<GenreModel, APIManager.APIError>) in

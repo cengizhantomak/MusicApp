@@ -8,10 +8,14 @@
 import Foundation
 import UIKit
 import CoreData
+import AVFoundation
 
 class AlbumDetailViewModel {
     private let albumId: Int
     private var trackList = [AlbumDetailDataModel]()
+    
+    private(set) var audioPlayer: AVPlayer?
+    private(set) var isPlaying: Bool = false
     
     var numberOfTracks: Int {
         return trackList.count
@@ -25,6 +29,14 @@ class AlbumDetailViewModel {
         return trackList[index]
     }
     
+    // MARK: - Time Conversion
+    func secondsToMinutesSeconds(seconds: Int) -> String {
+        let mins = seconds / 60
+        let secs = seconds % 60
+        return String(format: "%d:%02d", mins, secs)
+    }
+    
+    // MARK: - Networking
     func fetchTracks(completion: @escaping () -> Void) {
         let urlString = "https://api.deezer.com/album/\(albumId)/tracks"
         APIManager.shared.fetchData(urlString: urlString) { (result: Result<AlbumDetailModel, APIManager.APIError>) in
@@ -38,12 +50,7 @@ class AlbumDetailViewModel {
         }
     }
     
-    func secondsToMinutesSeconds(seconds: Int) -> String {
-        let mins = seconds / 60
-        let secs = seconds % 60
-        return String(format: "%d:%02d", mins, secs)
-    }
-    
+    // MARK: - Core Data
     func saveTrackToCoreData(track: AlbumDetailDataModel, albumImageUrl: String) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
@@ -84,6 +91,35 @@ class AlbumDetailViewModel {
         }
     }
     
+    // MARK: - Audio Player
+    func playPauseTrack(at index: Int) {
+        let track = trackList[index]
+        let previewUrl = track.preview
+        
+        if let currentURL = audioPlayer?.currentItem?.asset as? AVURLAsset, currentURL.url.absoluteString == previewUrl {
+            if isPlaying {
+                audioPlayer?.pause()
+                isPlaying = false
+            } else {
+                audioPlayer?.play()
+                isPlaying = true
+            }
+        } else {
+            if let previewURL = URL(string: previewUrl) {
+                let playerItem = AVPlayerItem(url: previewURL)
+                audioPlayer = AVPlayer(playerItem: playerItem)
+                audioPlayer?.play()
+                isPlaying = true
+            }
+        }
+    }
+    
+    func stopPlaying() {
+        audioPlayer?.pause()
+        audioPlayer = nil
+    }
+    
+    // MARK: - Favorite Track
     func isFavoriteTrack(_ track: AlbumDetailDataModel) -> Bool {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext

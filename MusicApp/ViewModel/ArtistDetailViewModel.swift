@@ -23,6 +23,7 @@ class ArtistDetailViewModel {
         return albumList[index]
     }
     
+    // MARK: - Networking
     func fetchAlbums(completion: @escaping () -> Void) {
         let urlString = "https://api.deezer.com/artist/\(artistId)/albums"
         APIManager.shared.fetchData(urlString: urlString) { (result: Result<ArtistDetailModel, APIManager.APIError>) in
@@ -36,6 +37,7 @@ class ArtistDetailViewModel {
         }
     }
     
+    // MARK: - Date Conversion
     func convertDate(inputDate: String) -> String? {
         let inputFormatter = DateFormatter()
         inputFormatter.dateFormat = "yyyy-dd-mm"

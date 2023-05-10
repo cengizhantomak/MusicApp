@@ -15,6 +15,7 @@ class ArtistDetailViewController: UIViewController, UITableViewDelegate, UITable
     var artist: ArtistDataModel?
     private var artistDetailViewModel: ArtistDetailViewModel!
     
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,6 +39,7 @@ class ArtistDetailViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
+    // MARK: - TableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return artistDetailViewModel.numberOfAlbums
     }
@@ -55,11 +57,6 @@ class ArtistDetailViewController: UIViewController, UITableViewDelegate, UITable
         let releaseDate = artistDetailViewModel.convertDate(inputDate: album.release_date)
         cell.albumReleaseDateLabel.text = releaseDate
         
-        cell.albumImage.layer.cornerRadius = 10
-        cell.albumView.layer.cornerRadius = 10
-        cell.albumView.layer.borderWidth = 1
-        cell.albumView.layer.borderColor = UIColor.darkGray.cgColor
-        
         return cell
     }
     
@@ -67,6 +64,7 @@ class ArtistDetailViewController: UIViewController, UITableViewDelegate, UITable
         self.performSegue(withIdentifier: "toAlbumDetailVC", sender: indexPath.row)
     }
     
+    // MARK: - Segue Handling
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let index = sender as? Int
         let albumDetailVC = segue.destination as! AlbumDetailViewController

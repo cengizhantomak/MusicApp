@@ -16,11 +16,15 @@ class LikeTracksTableViewCell: UITableViewCell {
     @IBOutlet weak var likePlayIcon: UIImageView!
     @IBOutlet weak var likeImage: UIImageView!
     
-//    var isFavorited: Bool = false
-    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        likePlayIcon.isHidden = true
+        
+        likesTrackImage.layer.cornerRadius = 10
+        likesView.layer.cornerRadius = 10
+        likesView.layer.borderWidth = 1
+        likesView.layer.borderColor = UIColor.darkGray.cgColor
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

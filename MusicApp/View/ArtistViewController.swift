@@ -9,11 +9,12 @@ import UIKit
 
 class ArtistViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
+    @IBOutlet weak var artistCollectionView: UICollectionView!
+    
     var genre: GenreDataModel?
     private var artistViewModel: ArtistViewModel!
     
-    @IBOutlet weak var artistCollectionView: UICollectionView!
-    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,6 +33,7 @@ class ArtistViewController: UIViewController, UICollectionViewDelegate, UICollec
         navigationItem.title = genre?.name
     }
     
+    // MARK: - CollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return artistViewModel.numberOfArtists
     }
@@ -46,8 +48,6 @@ class ArtistViewController: UIViewController, UICollectionViewDelegate, UICollec
             cell.artistImage.image = image
         }
         
-        cell.artistImage.layer.cornerRadius = 10
-        
         return cell
     }
     
@@ -55,6 +55,7 @@ class ArtistViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.performSegue(withIdentifier: "toArtistDetailVC", sender: indexPath.row)
     }
     
+    // MARK: - Segue Handling
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let index = sender as? Int
         let artistDetailVC = segue.destination as! ArtistDetailViewController

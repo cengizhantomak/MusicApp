@@ -23,6 +23,7 @@ class ArtistViewModel {
         return artistList[index]
     }
     
+    // MARK: - Networking
     func fetchArtists(completion: @escaping () -> Void) {
         let urlString = "https://api.deezer.com/genre/\(genreId)/artists"
         APIManager.shared.fetchData(urlString: urlString) { (result: Result<ArtistModel, APIManager.APIError>) in

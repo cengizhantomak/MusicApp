@@ -20,7 +20,13 @@ class TrackTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        playIcon.isHidden = true
+        
+        trackImage.layer.cornerRadius = 10
+        trackView.layer.cornerRadius = 10
+        trackView.layer.borderWidth = 1
+        trackView.layer.borderColor = UIColor.darkGray.cgColor
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

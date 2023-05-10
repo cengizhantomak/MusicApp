@@ -17,6 +17,10 @@ class AlbumTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        albumImage.layer.cornerRadius = 10
+        albumView.layer.cornerRadius = 10
+        albumView.layer.borderWidth = 1
+        albumView.layer.borderColor = UIColor.darkGray.cgColor
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

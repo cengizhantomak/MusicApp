@@ -13,6 +13,7 @@ class GenreViewController: UIViewController, UICollectionViewDataSource, UIColle
     
     private var genreViewModel: GenreViewModel!
     
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,6 +30,7 @@ class GenreViewController: UIViewController, UICollectionViewDataSource, UIColle
         }
     }
     
+    // MARK: - CollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return genreViewModel.numberOfGenres
     }
@@ -43,8 +45,6 @@ class GenreViewController: UIViewController, UICollectionViewDataSource, UIColle
             cell.genreImage.image = image
         }
         
-        cell.genreImage.layer.cornerRadius = 10
-        
         return cell
     }
     
@@ -53,6 +53,7 @@ class GenreViewController: UIViewController, UICollectionViewDataSource, UIColle
         self.performSegue(withIdentifier: "toArtistVC", sender: indexPath.row)
     }
     
+    // MARK: - Segue Handling
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let index = sender as? Int
         let artistVC = segue.destination as! ArtistViewController
