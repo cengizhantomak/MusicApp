@@ -13,6 +13,7 @@ class LikesViewController: UIViewController {
     @IBOutlet weak var searchTrack: UISearchBar!
     
     private var viewModel = LikeViewModel()
+    let refreshControl = UIRefreshControl()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -25,11 +26,19 @@ class LikesViewController: UIViewController {
         
         likeTrackTableView.separatorStyle = .none
         likeTrackTableView.showsVerticalScrollIndicator = false
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+        
+        refreshControl.addTarget(self, action: #selector(refreshList(_:)), for: .valueChanged)
+        likeTrackTableView.refreshControl = refreshControl
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        NoNetwork.showAlertIfNoInternet(presenter: self)
         viewModel.fetchFavoriteTracks()
         likeTrackTableView.reloadData()
     }
@@ -41,6 +50,19 @@ class LikesViewController: UIViewController {
     }
     
     // MARK: - Actions Selector
+    @objc func refreshList(_ sender: Any) {
+        if NoNetwork.isInternetAvailable() {
+            
+        } else {
+            NoNetwork.showAlertIfNoInternet(presenter: self)
+        }
+        refreshControl.endRefreshing()
+    }
+    
+    @objc func hideKeyboard() {
+        view.endEditing(true)
+    }
+    
     @objc func likeImageTapped(_ sender: UITapGestureRecognizer) {
         guard let row = sender.view?.tag else { return }
         let track = viewModel.track(at: row)

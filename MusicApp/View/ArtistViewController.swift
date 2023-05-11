@@ -13,6 +13,7 @@ class ArtistViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     var genre: GenreDataModel?
     private var artistViewModel: ArtistViewModel!
+    let refreshControl = UIRefreshControl()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -31,6 +32,30 @@ class ArtistViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
         
         navigationItem.title = genre?.name
+        
+        refreshControl.addTarget(self, action: #selector(refreshList(_:)), for: .valueChanged)
+        artistCollectionView.refreshControl = refreshControl
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NoNetwork.showAlertIfNoInternet(presenter: self)
+    }
+    
+    // MARK: - Actions Selector
+    @objc func refreshList(_ sender: Any) {
+        if NoNetwork.isInternetAvailable() {
+            artistViewModel = ArtistViewModel(genreId: genre!.id)
+            artistViewModel.fetchArtists {
+                DispatchQueue.main.async {
+                    self.artistCollectionView.reloadData()
+                }
+            }
+        } else {
+            NoNetwork.showAlertIfNoInternet(presenter: self)
+        }
+        refreshControl.endRefreshing()
     }
     
     // MARK: - CollectionView

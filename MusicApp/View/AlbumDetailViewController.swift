@@ -13,6 +13,7 @@ class AlbumDetailViewController: UIViewController {
     
     var album: ArtistDetailDataModel?
     var albumDetailViewModel: AlbumDetailViewModel!
+    let refreshControl = UIRefreshControl()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -32,10 +33,15 @@ class AlbumDetailViewController: UIViewController {
                 self.trackTableView.reloadData()
             }
         }
+        
+        refreshControl.addTarget(self, action: #selector(refreshList(_:)), for: .valueChanged)
+        trackTableView.refreshControl = refreshControl
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        NoNetwork.showAlertIfNoInternet(presenter: self)
         trackTableView.reloadData()
     }
     
@@ -46,6 +52,20 @@ class AlbumDetailViewController: UIViewController {
     }
     
     // MARK: - Actions Selector
+    @objc func refreshList(_ sender: Any) {
+        if NoNetwork.isInternetAvailable() {
+            albumDetailViewModel = AlbumDetailViewModel(albumId: album!.id)
+            albumDetailViewModel.fetchTracks {
+                DispatchQueue.main.async {
+                    self.trackTableView.reloadData()
+                }
+            }
+        } else {
+            NoNetwork.showAlertIfNoInternet(presenter: self)
+        }
+        refreshControl.endRefreshing()
+    }
+    
     @objc func likeImageTapped(_ sender: UITapGestureRecognizer) {
         guard let row = sender.view?.tag else{ return }
         

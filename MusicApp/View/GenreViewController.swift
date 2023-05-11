@@ -12,6 +12,7 @@ class GenreViewController: UIViewController,UICollectionViewDelegate, UICollecti
     @IBOutlet weak var genreCollectionView: UICollectionView!
     
     private var genreViewModel: GenreViewModel!
+    let refreshControl = UIRefreshControl()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -28,6 +29,30 @@ class GenreViewController: UIViewController,UICollectionViewDelegate, UICollecti
                 self.genreCollectionView.reloadData()
             }
         }
+        
+        refreshControl.addTarget(self, action: #selector(refreshList(_:)), for: .valueChanged)
+        genreCollectionView.refreshControl = refreshControl
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NoNetwork.showAlertIfNoInternet(presenter: self)
+    }
+    
+    // MARK: - Actions Selector
+    @objc func refreshList(_ sender: Any) {
+        if NoNetwork.isInternetAvailable() {
+            genreViewModel.fetchGenres {
+                DispatchQueue.main.async {
+                    self.genreCollectionView.reloadData()
+                }
+            }
+        } else {
+            NoNetwork.showAlertIfNoInternet(presenter: self)
+            
+        }
+        refreshControl.endRefreshing()
     }
     
     // MARK: - CollectionView

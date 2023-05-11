@@ -14,6 +14,7 @@ class ArtistDetailViewController: UIViewController, UITableViewDelegate, UITable
     
     var artist: ArtistDataModel?
     private var artistDetailViewModel: ArtistDetailViewModel!
+    let refreshControl = UIRefreshControl()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -40,6 +41,30 @@ class ArtistDetailViewController: UIViewController, UITableViewDelegate, UITable
                 self.albumTableView.reloadData()
             }
         }
+        
+        refreshControl.addTarget(self, action: #selector(refreshList(_:)), for: .valueChanged)
+        albumTableView.refreshControl = refreshControl
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NoNetwork.showAlertIfNoInternet(presenter: self)
+    }
+    
+    // MARK: - Actions Selector
+    @objc func refreshList(_ sender: Any) {
+        if NoNetwork.isInternetAvailable() {
+            artistDetailViewModel = ArtistDetailViewModel(artistId: artist!.id)
+            artistDetailViewModel.fetchAlbums {
+                DispatchQueue.main.async {
+                    self.albumTableView.reloadData()
+                }
+            }
+        } else {
+            NoNetwork.showAlertIfNoInternet(presenter: self)
+        }
+        refreshControl.endRefreshing()
     }
     
     // MARK: - TableView
