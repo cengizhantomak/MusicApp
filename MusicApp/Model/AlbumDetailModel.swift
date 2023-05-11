@@ -16,4 +16,9 @@ struct AlbumDetailDataModel: Codable {
     let title: String
     let duration: Int
     let preview: String
+    let artist: Artist
+}
+
+struct Artist: Codable {
+    let name: String
 }

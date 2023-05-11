@@ -102,6 +102,8 @@ extension AlbumDetailViewController: UITableViewDelegate, UITableViewDataSource 
             cell.likeImage.image = UIImage(systemName: "heart")?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
         }
         
+        cell.playIcon.isHidden = true
+        
         return cell
     }
     

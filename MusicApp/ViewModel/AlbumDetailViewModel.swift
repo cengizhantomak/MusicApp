@@ -62,6 +62,7 @@ class AlbumDetailViewModel {
         newTrack.setValue(track.title, forKey: "title")
         newTrack.setValue(track.duration, forKey: "duration")
         newTrack.setValue(track.preview, forKey: "preview")
+        newTrack.setValue(track.artist.name, forKey: "artist")
         newTrack.setValue(albumImageUrl, forKey: "imageUrl")
         
         do {

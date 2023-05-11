@@ -21,7 +21,10 @@ class TrackTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        playIcon.isHidden = true
+        trackImage.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
+        trackImage.layer.cornerRadius = 10
+        trackImage.layer.borderWidth = 1
+        trackImage.layer.borderColor = UIColor.darkGray.cgColor
         
         trackImage.layer.cornerRadius = 10
         trackView.layer.cornerRadius = 10

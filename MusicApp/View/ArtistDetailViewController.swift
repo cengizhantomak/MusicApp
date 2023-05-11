@@ -27,6 +27,9 @@ class ArtistDetailViewController: UIViewController, UITableViewDelegate, UITable
         
         navigationItem.title = artist?.name
         
+        artistImage.layer.borderWidth = 2
+        artistImage.layer.borderColor = UIColor.darkGray.cgColor
+        
         ImageLoader.shared.loadImage(from: artist!.picture_medium) { image in
             self.artistImage.image = image
         }

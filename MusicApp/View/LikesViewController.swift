@@ -68,6 +68,8 @@ extension LikesViewController: UITableViewDelegate, UITableViewDataSource {
             cell.likesTrackImage.image = image
         }
         
+        cell.likeArtistLabel.text = track.value(forKey: "artist") as? String
+        
         cell.likeNameLabel.text = track.value(forKey: "title") as? String
         
         let trackDurationInSeconds = track.value(forKey: "duration") as? Int ?? 0
@@ -80,6 +82,8 @@ extension LikesViewController: UITableViewDelegate, UITableViewDataSource {
         cell.likeImage.isUserInteractionEnabled = true
         cell.likeImage.tag = indexPath.row
         
+        cell.likePlayIcon.isHidden = true
+
         return cell
     }
     

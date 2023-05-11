@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ArtistViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class ArtistViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var artistCollectionView: UICollectionView!
     
@@ -49,6 +49,14 @@ class ArtistViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let collectionViewWidth = artistCollectionView.bounds.width
+            let itemWidth = collectionViewWidth / 2 - 15
+            let itemHeight = itemWidth
+        
+            return CGSize(width: itemWidth, height: itemHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

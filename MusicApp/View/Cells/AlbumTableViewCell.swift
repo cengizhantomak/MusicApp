@@ -17,7 +17,11 @@ class AlbumTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        albumImage.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
         albumImage.layer.cornerRadius = 10
+        albumImage.layer.borderWidth = 1
+        albumImage.layer.borderColor = UIColor.darkGray.cgColor
+        
         albumView.layer.cornerRadius = 10
         albumView.layer.borderWidth = 1
         albumView.layer.borderColor = UIColor.darkGray.cgColor

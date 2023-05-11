@@ -11,6 +11,7 @@ class LikeTracksTableViewCell: UITableViewCell {
 
     @IBOutlet weak var likesView: UIView!
     @IBOutlet weak var likesTrackImage: UIImageView!
+    @IBOutlet weak var likeArtistLabel: UILabel!
     @IBOutlet weak var likeNameLabel: UILabel!
     @IBOutlet weak var likeDurationLabel: UILabel!
     @IBOutlet weak var likePlayIcon: UIImageView!
@@ -18,8 +19,11 @@ class LikeTracksTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        likePlayIcon.isHidden = true
+                
+        likesTrackImage.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
+        likesTrackImage.layer.cornerRadius = 10
+        likesTrackImage.layer.borderWidth = 1
+        likesTrackImage.layer.borderColor = UIColor.darkGray.cgColor
         
         likesTrackImage.layer.cornerRadius = 10
         likesView.layer.cornerRadius = 10

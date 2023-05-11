@@ -99,7 +99,11 @@ class LikeViewModel {
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let context = appDelegate.persistentContainer.viewContext
             let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Track")
-            fetchRequest.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchText)
+            
+            let titlePredicate = NSPredicate(format: "title CONTAINS[cd] %@", searchText)
+            let artistPredicate = NSPredicate(format: "artist CONTAINS[cd] %@", searchText)
+            let compoundPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [titlePredicate, artistPredicate])
+            fetchRequest.predicate = compoundPredicate
             
             do {
                 favoriteTracks = try context.fetch(fetchRequest)
