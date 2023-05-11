@@ -22,5 +22,4 @@ Uygulama Swift programlama dili kullanılarak geliştirilmiştir.
 
 Kullanıcılar, beğendikleri şarkıları kolayca bulabilecekleri ve daha sonra tekrar dinleyebilecekleri bir platform sunar.
 
-![MusicApp](https://github.com/cengizhantomak/MusicApp/assets/98701769/88a6c6ff-43db-472c-ac94-51fcf81f049d)
-
+![musicApp](https://github.com/cengizhantomak/MusicApp/assets/98701769/42821bae-d48d-4f71-8af1-1cc0d06ed4b9)
